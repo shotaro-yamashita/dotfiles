@@ -1,8 +1,8 @@
 [user]
-	name = Shotaro Yamashita
-	email = shotaro-yamashita@cuebic.co.jp
+  name = Shotaro Yamashita
+  email = shotaro-yamashita@cuebic.co.jp
 [ghq]
-	root = ~/Repository
+  root = ~/Repository/src
 [core]
   excludesfile = ~/.gitignore_global
-	editor = vim
+  editor = vim
