@@ -14,9 +14,12 @@ set -x PATH $HOME/.rbenv/shims $PATH
 rbenv rehash >/dev/null ^&1
 # node
 set -x PATH ./node_modules/.bin $PATH
-# go
+# golang
 set -x PATH $HOME/.goenv/shims $PATH
 goenv rehash >/dev/null ^&1
+set -x GOROOT (go env GOROOT)
+set -x GOPATH ~/Repository
+set -x PATH $GOPATH/bin $PATH
 
 # -------------------------
 # settings
