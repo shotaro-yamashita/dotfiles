@@ -50,7 +50,7 @@ function hur
 end
 
 # 移動履歴からディレクトリを選択し遷移する関数
-function zz
+function hcd
   z -l | fzf | awk '{ print $2 }' | read recent
   if [ $recent ]
       cd $recent
@@ -66,7 +66,7 @@ end
 
 # git管理下のファイルをfzfで絞り込み、選択したファイルをvimで開く関数
 function lvi
-  git ls-files | uniq | fzf |  xargs -o vim
+  git ls-files | uniq | fzf | xargs -o vim
 end
 
 # gitのブランチ一覧からブランチを選択し、そのブランチをチェックアウトする関数
