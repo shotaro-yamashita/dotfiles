@@ -1,5 +1,9 @@
+fisherman/await
+oh-my-fish/plugin-brew
 fisherman/fzf
-fisherman/z
-omf/theme-mars
-omf/brew
+fisherman/get
+fisherman/getopts
 decors/fish-ghq
+fisherman/last_job_id
+oh-my-fish/theme-mars
+fisherman/z
