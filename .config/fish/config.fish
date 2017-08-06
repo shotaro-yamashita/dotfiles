@@ -2,19 +2,19 @@
 # environments
 # -------------------------
 # binary
-set -x PATH /usr/local/bin $PATH
+set -x PATH /usr/local/bin /usr/local/sbin $PATH
 # homebrew
 set -x HOMEBREW_GITHUB_API_TOKEN b5ab7ab26e945787e016db29e018c9e707b49977
-# tmux
-set -x TERM screen-256color
-# nodebrew
+# node
 set -x PATH $HOME/.nodebrew/current/bin $PATH
-# rbenv
+set -x PATH ./node_modules/.bin $PATH
+# ruby
 set -x PATH $HOME/.rbenv/shims $PATH
 rbenv rehash >/dev/null ^&1
-# node
-set -x PATH ./node_modules/.bin $PATH
-# golang
+# python
+status --is-interactive; and . (pyenv init -| psub)
+set -x PATH $HOME/.pyenv/shims $PATH
+# go
 set -x PATH $HOME/.goenv/shims $PATH
 goenv rehash >/dev/null ^&1
 set -x GOROOT (go env GOROOT)
