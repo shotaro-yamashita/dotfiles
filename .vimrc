@@ -527,13 +527,23 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 
 
 " neco-look
-" neocomplete用英語補完プラグイン
+" neocomplete用英語補完
 " ----------------------------------
 
 Plug 'ujihisa/neco-look'
 
 " インサートモード中に 'Ctrl + s' で英語補完候補表示
 inoremap <expr><C-s> neocomplete#start_manual_complete('look')
+
+
+" syntastic
+" 文法チェック
+" ----------------------------------
+
+Plug 'scrooloose/syntastic'
+
+" Pythonの文法チェック
+let g:syntastic_python_checkers = [ 'flake8' ]
 
 
 " caw.vim
@@ -565,6 +575,7 @@ let g:peekaboo_window = 'vertical botright 50new'
 " winresizer
 " ウィンドウサイズのリサイズ
 " ----------------------------------
+
 Plug 'simeji/winresizer'
 
 " '\ -> w' でウィンドウリサイズ開始
@@ -607,6 +618,7 @@ nmap [c <Plug>GitGutterPrevHunk
 " vimproc
 " 非同期実行用のライブラリ
 " ----------------------------------
+
 Plug 'Shougo/vimproc', { 'do': 'make' }
 
 
@@ -767,6 +779,7 @@ let g:vim_markdown_new_list_item_indent = 2
 " emmet-vim
 " emmetによるHTML記述サポート
 " ----------------------------------
+
 Plug 'mattn/emmet-vim'
 
 let g:user_emmet_install_global = 0
@@ -776,12 +789,14 @@ autocmd vimrc FileType html,css,php EmmetInstall
 " vim-pug
 " Pugテンプレートの記述サポート
 " ----------------------------------
+
 Plug 'digitaltoad/vim-pug'
 
 
 " yajs.vim
 " ES2015を含むJavaScriptの記述サポート
 " ----------------------------------
+
 Plug 'othree/yajs.vim'
 
 
@@ -797,6 +812,13 @@ Plug 'fatih/vim-go', { 'for': [ 'go' ] }
 " ----------------------------------
 
 Plug 'vim-ruby/vim-ruby'
+
+
+" jedi-vim
+" Pythonの自動補完
+" ----------------------------------
+
+Plug 'davidhalter/jedi-vim'
 
 
 " vim-fish
