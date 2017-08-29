@@ -43,6 +43,11 @@ autocmd vimrc BufNewFile,BufRead *.{js,es6} set filetype=javascript
 autocmd vimrc BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 " YAMLファイルタイプの拡張子指定
 autocmd vimrc BufNewFile,BufRead *.{yaml,yml} set filetype=yaml
+" Golangの 'err' をハイライト
+autocmd FileType go :highlight goErr cterm=bold ctermfg=214
+autocmd FileType go :match goErr /\<err\>/
+" Golangのインデント設定
+autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 
 " エンコーディング
@@ -390,7 +395,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/vim-plug', { 'dir': '~/.vim/plugged/vim-plug/autoload' }
+Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
 
 
 " vim-hybrid
@@ -404,7 +409,7 @@ Plug 'w0ng/vim-hybrid'
 " Vim上で 'fzf' の機能を利用可能にする
 " ----------------------------------
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all'}
 Plug 'junegunn/fzf.vim'
 
 " gitコマンドを利用し、プロジェクトルートを見つける関数
@@ -471,16 +476,16 @@ let g:neocomplete#keyword_patterns['_'] = '\h\w*'
 if !exists('g:neocomplete#delimiter_patterns')
   let g:neocomplete#delimiter_patterns= {}
 endif
-let g:neocomplete#delimiter_patterns['vim'] = [ '#' ]
-let g:neocomplete#delimiter_patterns['php'] = [ '->', '::', '\' ]
+let g:neocomplete#delimiter_patterns['vim'] = ['#']
+let g:neocomplete#delimiter_patterns['php'] = ['->', '::', '\']
 " 補完ソース定義
 if !exists('g:neocomplete#sources')
   let g:neocomplete#sources = {}
 endif
 let g:neocomplete#sources = {
-      \   '_'         : [ 'neosnippet', 'file',               'buffer' ],
-      \   'php'       : [ 'neosnippet', 'file', 'dictionary', 'buffer' ],
-      \   'javascript': [ 'neosnippet', 'file', 'dictionary', 'buffer' ],
+      \   '_'         : ['neosnippet', 'file',               'buffer'],
+      \   'php'       : ['neosnippet', 'file', 'dictionary', 'buffer'],
+      \   'javascript': ['neosnippet', 'file', 'dictionary', 'buffer'],
       \ }
 " 辞書定義
 if !exists('g:neocomplete#dictionary#dictionaries')
@@ -543,7 +548,16 @@ inoremap <expr><C-s> neocomplete#start_manual_complete('look')
 Plug 'scrooloose/syntastic'
 
 " Pythonの文法チェック
-let g:syntastic_python_checkers = [ 'flake8' ]
+let g:syntastic_python_checkers = ['flake8']
+" Golangの文法チェック
+let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+" 指定ファイルタイプの保存時に文法チェックを実行
+let g:syntastic_mode_map = {
+      \   'mode' : 'active',
+      \   'active_filetypes' : ['go'],
+      \ }
+
+
 
 
 " caw.vim
@@ -619,7 +633,7 @@ nmap [c <Plug>GitGutterPrevHunk
 " 非同期実行用のライブラリ
 " ----------------------------------
 
-Plug 'Shougo/vimproc', { 'do': 'make' }
+Plug 'Shougo/vimproc', {'do': 'make'}
 
 
 " vim-quickrun
@@ -656,6 +670,10 @@ let g:quickrun_config = {
       \     'cmdopt'                        : '',
       \     'exec'                          : '%c %o %s',
       \     'outputter/quickfix/errorformat': '%f:%l,%m in %f on line %l',
+      \   },
+      \   'go.test': {
+      \     'command'                       : 'go',
+      \     'exec'                          : '%c test',
       \   },
       \ }
 " デフォルトのキーマッピングを無効化
@@ -704,13 +722,13 @@ let g:lightline = {
       \ 'colorscheme': 'jellybeans',
       \   'active': {
       \     'left': [
-      \       [ 'mode', 'paste' ],
-      \       [ 'fugitive', 'readonly', 'absolutepath', 'modified' ],
+      \       ['mode', 'paste'],
+      \       ['fugitive', 'readonly', 'absolutepath', 'modified'],
       \     ],
       \     'right': [
-      \       [ 'qfstatusline', 'lineinfo' ],
-      \       [ 'percent' ],
-      \       [ 'fileformat', 'fileencoding', 'filetype' ],
+      \       ['qfstatusline', 'lineinfo'],
+      \       ['percent'],
+      \       ['fileformat', 'fileencoding', 'filetype'],
       \     ],
       \   },
       \   'component': {
@@ -737,7 +755,7 @@ let g:Qfstatusline#UpdateCmd = function('lightline#update')
 Plug 'Yggdroot/indentLine'
 
 " プラグインを有効化するファイルタイプを指定
-let g:indentLine_fileType = [ 'yaml' ]
+let g:indentLine_fileType = ['yaml']
 " 処理の高速化
 let g:indentLine_faster = 1
 
@@ -766,7 +784,7 @@ Plug 'kannokanno/previm'
 " Markdownの記述サポート
 " ----------------------------------
 
-Plug 'tpope/vim-markdown', { 'for': [ 'markdown' ] }
+Plug 'tpope/vim-markdown', {'for': ['markdown']}
 
 " キーマッピング無効
 let g:vim_markdown_no_default_key_mappings = 1
@@ -804,7 +822,23 @@ Plug 'othree/yajs.vim'
 " GO言語の開発サポート
 " ----------------------------------
 
-Plug 'fatih/vim-go', { 'for': [ 'go' ] }
+Plug 'fatih/vim-go', {'for': ['go']}
+
+" '\ -> g -> b' で 'GoBuild'
+autocmd FileType go nmap <Leader>gb <Plug>(go-build)
+" '\ -> g -> r' で 'GoRun'
+autocmd FileType go nmap <Leader>gr <Plug>(go-run)
+
+" GoFmt時に自動でインポートを実行
+let g:go_fmt_command = 'goimports'
+" ハイライト設定
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_operators = 1
+" GoFmtが失敗した時のquickfix表示を有効化
+let g:go_fmt_fail_silently = 1
 
 
 " vim-ruby
