@@ -498,7 +498,10 @@ let g:neocomplete#sources#dictionary#dictionaries = {
       \ }
 
 " ファイルタイプ毎にオムニ補完を有効化
+autocmd vimrc FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd vimrc FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd vimrc FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd vimrc FileType python setlocal omnifunc=pythoncomplete#Complete
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
@@ -822,7 +825,7 @@ Plug 'othree/yajs.vim'
 " GO言語の開発サポート
 " ----------------------------------
 
-Plug 'fatih/vim-go', {'for': ['go']}
+Plug 'fatih/vim-go', {'do': 'GoInstallBinaries', 'for': ['go']}
 
 " '\ -> g -> b' で 'GoBuild'
 autocmd FileType go nmap <Leader>gb <Plug>(go-build)
