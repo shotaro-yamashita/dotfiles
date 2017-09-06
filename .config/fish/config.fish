@@ -74,9 +74,13 @@ end
 
 # gitのブランチ一覧からブランチを選択し、そのブランチをチェックアウトする関数
 function gco
-  git branch | fzf | tr -d ' ' | read branch
-  if [ $branch ]
-    git checkout $branch
+  git branch -a | fzf | tr -d ' ' | read branch
+  switch $branch
+    case 'remotes/*'
+      set -l _branch (echo $branch | awk -F '/' '{print $3}')
+      git checkout $_branch
+    case '*'
+      git checkout $branch
   end
   commandline -f repaint
 end
