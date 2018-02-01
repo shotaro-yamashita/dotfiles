@@ -67,6 +67,11 @@ function pkl
   ps -ef | sed 1d | fzf -m | awk '{print $2}' | xargs kill -9
 end
 
+# カレントディレクトリのファイル一覧から対象ファイルを選択し、削除する関数
+function lrm
+  ls -a | fzf -m | xargs -o rm
+end
+
 # git管理下のファイルをfzfで絞り込み、選択したファイルをvimで開く関数
 function lvi
   git ls-files | uniq | fzf | xargs -o vim
@@ -74,20 +79,25 @@ end
 
 # gitのブランチ一覧からブランチを選択し、そのブランチをチェックアウトする関数
 function gco
-  git branch -a | fzf | tr -d ' ' | read branch
-  switch $branch
-    case 'remotes/*'
-      set -l _branch (echo $branch | awk -F '/' '{print $3}')
-      git checkout $_branch
-    case '*'
-      git checkout $branch
+  git branch -a | fzf -m | tr -d ' ' | read branch
+  if [ $branch ]
+    switch $branch
+      case 'remotes/*/*/*'
+        set -l _branch (echo $branch | awk -F '/' '{print $3"/"$4}')
+        git checkout $_branch
+      case 'remotes/*'
+        set -l _branch (echo $branch | awk -F '/' '{print $3}')
+        git checkout $_branch
+      case '*'
+        git checkout $branch
+    end
+    commandline -f repaint
   end
-  commandline -f repaint
 end
 
 # gitのブランチ一覧からブランチを選択し、そのブランチを削除する関数
 function gdb
-  git branch | fzf | tr -d ' ' | read branch
+  git branch | fzf -m | tr -d ' ' | read branch
   if [ $branch ]
     git branch -D $branch
   end
