@@ -8,6 +8,7 @@ set -x HOMEBREW_GITHUB_API_TOKEN b5ab7ab26e945787e016db29e018c9e707b49977
 # node
 set -x PATH $HOME/.nodebrew/current/bin $PATH
 set -x PATH ./node_modules/.bin $PATH
+set -x PATH /usr/local/Cellar/yarn/1.5.1_1/bin $PATH
 # ruby
 set -x PATH $HOME/.rbenv/shims $PATH
 rbenv rehash >/dev/null ^&1
@@ -26,6 +27,8 @@ set -x PATH $GOPATH/bin $PATH
 # -------------------------
 # hub
 eval (hub alias -s)
+# direnv
+eval (direnv hook fish)
 
 # -------------------------
 # aliases

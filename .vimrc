@@ -678,6 +678,12 @@ let g:quickrun_config = {
       \     'command'                       : 'go',
       \     'exec'                          : '%c test',
       \   },
+      \   'nim': {
+      \     'command'                       : 'nim',
+      \     'cmdopt'                        : 'compile --run --verbosity:0',
+      \     'hook/sweep/files'              : '%S:p:r',
+      \     'tempfile'                      : '%{substitute(tempname(), ''\(\d\+\)$'', ''nim\1.nim'', '''')}',
+      \   },
       \ }
 " デフォルトのキーマッピングを無効化
 let g:quickrun_no_default_key_mappings = 1
@@ -851,6 +857,15 @@ let g:go_fmt_fail_silently = 1
 Plug 'vim-ruby/vim-ruby'
 
 
+" vim-vue
+" Vue.jsの開発サポート
+" ----------------------------------
+
+Plug 'posva/vim-vue'
+
+let g:vue_disable_pre_processors=1
+
+
 " jedi-vim
 " Pythonの自動補完
 " ----------------------------------
@@ -858,9 +873,18 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'davidhalter/jedi-vim'
 
 
+" nim.vim
+" Nimの開発サポート
+" ----------------------------------
+
+Plug 'zah/nim.vim'
+
+
 " vim-fish
 " fishスクリプトの記述サポート
 " ----------------------------------
+
+Plug 'vim-ruby/vim-ruby'
 
 Plug 'dag/vim-fish'
 
